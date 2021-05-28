@@ -5,14 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button button1,button2,button3,button4,button5,button6,button7,button8,button9,button0,buttonForAddition,buttonForSubtraction,buttonForMultiplication,buttonForDivision,buttonForOutput,buttonDecimal,clearButton;
-    private EditText editedText;
+    private Button button1,button2,button3,button4,button5,button6,button7,button8,button9,button0,
+            buttonForAddition,buttonForSubtraction,buttonForMultiplication,buttonForDivision,buttonForOutput,buttonDecimal,clearButton;
+    private TextView calculationResult, calculationString;
 
-    private float Value1, Value2;
+    private float value1, value2;
     private boolean Addition, Subtraction, Multiplication, Division ;
 
     @Override
@@ -22,98 +24,137 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initialize_variables();
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_0:
-                editedText.setText(editedText.getText()+"0");
+                calculationResult.setText(calculationResult.getText()+"0");
+                enableButtons();
                 break;
             case R.id.button_1:
-                editedText.setText(editedText.getText()+"1");
+                calculationResult.setText(calculationResult.getText()+"1");
+                enableButtons();
                 break;
             case R.id.button_2:
-                editedText.setText(editedText.getText()+"2");
+                calculationResult.setText(calculationResult.getText()+"2");
+                enableButtons();
                 break;
             case R.id.button_3:
-                editedText.setText(editedText.getText()+"3");
+                calculationResult.setText(calculationResult.getText()+"3");
+                enableButtons();
                 break;
             case R.id.button_4:
-                editedText.setText(editedText.getText()+"4");
+                calculationResult.setText(calculationResult.getText()+"4");
+                enableButtons();
                 break;
             case R.id.button_5:
-                editedText.setText(editedText.getText()+"5");
+                calculationResult.setText(calculationResult.getText()+"5");
+                enableButtons();
                 break;
             case R.id.button_6:
-                editedText.setText(editedText.getText()+"6");
+                calculationResult.setText(calculationResult.getText()+"6");
+                enableButtons();
                 break;
             case R.id.button_7:
-                editedText.setText(editedText.getText()+"7");
+                calculationResult.setText(calculationResult.getText()+"7");
+                enableButtons();
                 break;
             case R.id.button_8:
-                editedText.setText(editedText.getText()+"8");
+                calculationResult.setText(calculationResult.getText()+"8");
+                enableButtons();
                 break;
             case R.id.button_9:
-                editedText.setText(editedText.getText()+"9");
+                calculationResult.setText(calculationResult.getText()+"9");
+                enableButtons();
                 break;
             case R.id.button_for_decimal:
-                editedText.setText(editedText.getText()+".");
+                calculationResult.setText(calculationResult.getText()+".");
+                enableButtons();
                 break;
             case R.id.button_for_addition:
-                if (editedText == null){
-                    editedText.setText("");
-                }else {
-                    Value1 = Float.parseFloat(editedText.getText() + "");
-                    Addition = true;
-                    editedText.setText(null);
-                }
+                value1 = Integer.parseInt(calculationResult.getText() + "");
+                Addition = true;
+                calculationString.setText(value1 + " + ");
+                calculationResult.setText(null);
+                disableButtons();
                 break;
             case R.id.button_for_subtraction:
-                Value1 = Float.parseFloat(editedText.getText() + "");
-                Subtraction = true ;
-                editedText.setText(null);
+                value1 = Integer.parseInt(calculationResult.getText() + "");
+                Subtraction = true;
+                calculationString.setText(value1 + " - ");
+                calculationResult.setText(null);
+                disableButtons();
                 break;
             case R.id.button_for_multiplication:
-                Value1 = Float.parseFloat(editedText.getText() + "");
+                value1 = Integer.parseInt(calculationResult.getText() + "");
                 Multiplication = true ;
-                editedText.setText(null);
+                calculationString.setText(value1 + " * ");
+                calculationResult.setText(null);
+                disableButtons();
                 break;
             case R.id.button_for_division:
-                Value1 = Float.parseFloat(editedText.getText()+"");
+                value1 = Integer.parseInt(calculationResult.getText()+"");
                 Division = true ;
-                editedText.setText(null);
+                calculationString.setText(value1 + " / ");
+                calculationResult.setText(null);
+                disableButtons();
                 break;
             case R.id.button_for_output:
-                Value2 = Float.parseFloat(editedText.getText() + "");
-
-                if (Addition == true){
-                    editedText.setText(Value1 + Value2 +"");
-                    Toast.makeText(MainActivity.this, String.valueOf(Value1 + Value2), Toast.LENGTH_SHORT).show();
-                    Addition=false;
-                }
-
-                if (Subtraction == true){
-                    editedText.setText(Value1 - Value2 +"");
-                    Toast.makeText(MainActivity.this, String.valueOf(Value1 - Value2), Toast.LENGTH_SHORT).show();
-                    Subtraction=false;
-                }
-
-                if (Multiplication == true){
-                    editedText.setText(Value1 * Value2 + "");
-                    Toast.makeText(MainActivity.this, String.valueOf(Value1 * Value2), Toast.LENGTH_SHORT).show();
-                    Multiplication=false;
-                }
-
-                if (Division == true){
-                    editedText.setText(Value1 / Value2+"");
-                    Toast.makeText(MainActivity.this, String.valueOf(Value1 / Value2), Toast.LENGTH_SHORT).show();
-                    Division=false;
-                }
+                value2 = Integer.parseInt(calculationResult.getText() + "");
+                calculationString.setText(calculationString.getText().toString()+ value2);
+                calculate(value1,value2);
+                enableButtons();
                 break;
             case R.id.clear_button:
-                editedText.setText("");
+                calculationResult.setText("");
+                calculationString.setText("");
                 break;
-            default:
-                break;
+
+        }
+    }
+
+    private void enableButtons() {
+        buttonForAddition.setClickable(true);
+        buttonForSubtraction.setClickable(true);
+        buttonForMultiplication.setClickable(true);
+        buttonForDivision.setClickable(true);
+    }
+
+    private void disableButtons() {
+        buttonForAddition.setClickable(false);
+        buttonForSubtraction.setClickable(false);
+        buttonForMultiplication.setClickable(false);
+        buttonForDivision.setClickable(false);
+    }
+
+    private void calculate(float value1, float value2){
+        if (Addition == true){
+            calculationResult.setText(value1 + value2 +"");
+            Toast.makeText(MainActivity.this, String.valueOf(value1 + value2), Toast.LENGTH_SHORT).show();
+            Addition=false;
+        }
+
+        if (Subtraction == true){
+            calculationResult.setText(value1 - value2 +"");
+            Toast.makeText(MainActivity.this, String.valueOf(value1 - value2), Toast.LENGTH_SHORT).show();
+            Subtraction=false;
+        }
+
+        if (Multiplication == true){
+            calculationResult.setText(value1 * value2 + "");
+            Toast.makeText(MainActivity.this, String.valueOf(value1 * value2), Toast.LENGTH_SHORT).show();
+            Multiplication=false;
+        }
+
+        if (Division == true){
+            if(value2 != 0){
+                calculationResult.setText(value1 / value2+"");
+                Toast.makeText(MainActivity.this, String.valueOf(value1 / value2), Toast.LENGTH_SHORT).show();
+                Division=false;
+            } else {
+                Toast.makeText(MainActivity.this, String.valueOf("Enter a valid number"), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -135,7 +176,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonForOutput = (Button) findViewById(R.id.button_for_output);
         buttonDecimal = (Button) findViewById(R.id.button_for_decimal);
         clearButton = (Button) findViewById(R.id.clear_button);
-        editedText = (EditText) findViewById(R.id.edited_text);
+        calculationResult = (TextView) findViewById(R.id.edited_text);
+        calculationString = (TextView) findViewById(R.id.text_to_view);
 
         button0.setOnClickListener(this);
         button1.setOnClickListener(this);
@@ -154,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonForDivision.setOnClickListener(this);
         buttonForOutput.setOnClickListener(this);
         clearButton.setOnClickListener(this);
+        disableButtons();
     }
 
 }
